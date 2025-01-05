@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/", async(req,res)=>{
     try {
-        const result = await Books.create(req.body);
+        const result = await Books.insertMany(req.body);
         res.json(result)
     } catch(err) {
         console.error(err.message);
