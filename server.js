@@ -14,8 +14,8 @@ app.use(express.json());
 
 app.use("/books", bookRoutes);
 app.use("/user", userRoutes);
-app.use("/borrowed", borrowedBooksRoutes);
-app.use("/author", authorRoutes);
+app.use("/borrowed", borrowedBooksRoutes); 
+app.use("/authors", authorRoutes);
 
 app.get("/", (req,res)=>{
     res.json({message: "Hello there"});

@@ -1,7 +1,7 @@
 const Author = require("../models/author");
 const router = require("express").Router();
 
-router.post("/addauthor", async(req,res)=>{
+router.post("/", async(req,res)=>{
     try {
         const { name,dob,nationality,books } = req.body;
         const result = await Author.create({ name,dob,nationality,books });
@@ -11,9 +11,19 @@ router.post("/addauthor", async(req,res)=>{
     }
 })
 
-router.get("/allauthors", async(req,res)=>{
+router.get("/", async(req,res)=>{
     try {
         const result = await Author.find().populate('books', "title publishedDate genre price -_id");
+        res.json(result);
+    } catch(err) {
+        res.json({message: err.message})
+    }
+})
+
+router.get("/:id", async(req,res)=>{
+    try {
+        const id = req.params.id;
+        const result = await Author.find({_id: id}).populate('books', "title publishedDate genre price -_id");
         res.json(result);
     } catch(err) {
         res.json({message: err.message})

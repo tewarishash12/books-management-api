@@ -22,7 +22,17 @@ router.get("/", async(req,res)=>{
     }
 })
 
-router.put('/:title', async(req,res)=>{
+router.get("/id/:id", async(req,res)=>{
+    try{
+        const id = req.params.id;
+        const result = await Books.find({_id: id});
+        res.json(result);
+    } catch(err) {
+        res.json({message: err.message});
+    }
+})
+
+router.put('/title/:title', async(req,res)=>{
     try {
         const { title, author, published, genre, price} = req.body
         const results = await Books.findOneAndUpdate({title: req.params.title}, {title: title, author, published, genre, price }, {required:true})
