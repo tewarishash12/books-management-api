@@ -1,10 +1,12 @@
 const router = require("express").Router();
-const { viewAllUsers, addBooksBorrowed, returnBorrowedBook } = require("../main_controllers/bookUserController");
+const { viewAllUsers, addBooksBorrowed, deleteuser, borrowedBookReturn } = require("../main_controllers/bookUserController");
 
 router.get("/", viewAllUsers)
 
 router.put("/:id/borrow", addBooksBorrowed)
 
-router.delete("/deleteuser/:id", returnBorrowedBook)
+router.post("/:id/return", borrowedBookReturn)
+
+router.delete("/deleteuser/:id", deleteuser)
 
 module.exports = router;
