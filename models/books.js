@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Author = require("./author");
 
 const BookSchema = new mongoose.Schema({
     title : {type: String, required: true},
@@ -7,7 +6,7 @@ const BookSchema = new mongoose.Schema({
     publishedDate : {type: Date},   
     genre : {type: String},
     price : {type: Number, required: true, min:0},
-    assignedTo: {type: [mongoose.Schema.Types.ObjectId], ref: "User"}
+    assignedTo: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
 })
 
 BookSchema.post('save', async function(book){
