@@ -1,8 +1,6 @@
-const express = require("express");
 const Books = require("../models/books")
-const router = express.Router();
 
-router.post("/", async(req,res)=>{
+exports.addBook = async(req,res)=>{
     try {
         const book = new Books(req.body)
         const result = await book.save();
@@ -11,18 +9,18 @@ router.post("/", async(req,res)=>{
         console.error(err.message);
         res.json({message: err.message})
     }
-})
+}
 
-router.get("/", async(req,res)=>{
+exports.viewBooks = async(req,res)=>{
     try{
         const results = await Books.find();
         res.json(results);
     } catch(err) {
         res.json({message: err.message});
     }
-})
+}
 
-router.get("/id/:id", async(req,res)=>{
+exports.viewBookById = async(req,res)=>{
     try{
         const id = req.params.id;
         const result = await Books.find({_id: id});
@@ -30,9 +28,9 @@ router.get("/id/:id", async(req,res)=>{
     } catch(err) {
         res.json({message: err.message});
     }
-})
+}
 
-router.put('/title/:title', async(req,res)=>{
+exports.editByTitle = async(req,res)=>{
     try {
         const { title, author, published, genre, price} = req.body
         const results = await Books.findOneAndUpdate({title: req.params.title}, {title: title, author, published, genre, price }, {required:true})
@@ -40,24 +38,22 @@ router.put('/title/:title', async(req,res)=>{
     } catch(err) {
         res.json({message: err.message});
     }
-})
+}
 
-router.delete("/:title", async(req,res)=>{
+exports.deleteByTitle = async(req,res)=>{
     try{
         const results = await Books.findOneAndDelete({title: req.params.title});
         res.json(results);
     } catch(err) {
         res.json({message: err.message});
     }
-})
+}
 
-router.get("/genre/:genre", async(req,res)=>{
+exports.searchByGenre = async(req,res)=>{
     try{
         const results = await Books.find({genre: req.params.genre});
         res.json(results);
     } catch(err) {
         res.json({message: err.message});
     }
-})
-
-module.exports = router
+}
