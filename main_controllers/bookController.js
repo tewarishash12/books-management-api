@@ -13,7 +13,7 @@ exports.addBook = async(req,res)=>{
 
 exports.viewBooks = async(req,res)=>{
     try{
-        const results = await Books.find();
+        const results = await Books.find().populate('assignedTo', 'name email -_id');
         res.json(results);
     } catch(err) {
         res.json({message: err.message});
