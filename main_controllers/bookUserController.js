@@ -20,8 +20,8 @@ exports.addBooksBorrowed = async (req, res) => {
             return res.status(400).json({ message: "Requested user doesn't exist" })
 
         for (let i = 0; i < borrowed.length; i++) {
-            const checkBorrowed = await BorrowedBooks.findOne({ book_id: borrowed[i] })
-            if (!!checkBorrowed) {
+            const checkAssigned = await Book.findOne({ _id:borrowed[i],assignedTo: null });
+            if (!checkAssigned) {
                 return res.status(400).json({ message: "Requested book has already been issued to another user" })
             }
             const borrowUpdate = await BorrowedBooks.findOneAndUpdate({ book_id: borrowed[i] },
@@ -52,13 +52,13 @@ exports.borrowedBookReturn = async (req, res) => {
             if (!checkBorrowed) {
                 return res.status(400).json({ message: "Requested book hasn't been issued" })
             }
-            const borrowUpdate = await BorrowedBooks.findOneAndUpdate({ book_id: borrowed[i] },
+            const borrowUpdate = await BorrowedBooks.findOneAndUpdate({ book_id: returned[i] },
                 { returnDate: new Date(Date.now()).toISOString().split('T')[0] }
             )
             const userUpdate = await User.findOneAndUpdate({ _id: id }, { $pull: { borrowed: returned[i] } })
             const assignedToUpdate = await Book.findOneAndUpdate({ _id: returned[i] }, { assignedTo: null })
+            res.json({ borrowBook: borrowUpdate, user: userUpdate, book: assignedToUpdate })
         }
-        res.json({ borrowBook: borrowUpdate, user: userUpdate, book: assignedToUpdate })
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

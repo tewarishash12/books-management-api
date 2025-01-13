@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const BorrowedBookSchema = new mongoose.Schema({
     book_id: {type: mongoose.Schema.Types.ObjectId, ref:"Books", required:true},
-    availability: {type:Boolean, default:true},
     dateIssued: {type: Date},
     dueDate: {type: Date},
     returnDate: {type: Date},
