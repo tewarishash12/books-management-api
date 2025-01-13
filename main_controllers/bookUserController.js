@@ -4,7 +4,7 @@ const Book = require("../models/books")
 
 exports.viewAllUsers = async (req, res) => {
     try {
-        const result = await User.find().populate('borrowed', 'dateIssued dueDate returnDate');
+        const result = await User.find().populate('borrowed', 'dateIssued dueDate returnDate -_id');
         res.json(result);
     } catch (err) {
         res.json({ message: err.message });

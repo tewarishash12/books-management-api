@@ -1,21 +1,6 @@
-const BorrowedBooks = require("../models/borrowedBooks");
 const router = require("express").Router();
+const { viewBorrowedBooks } = require("../main_controllers/borrowedBooksController")
 
-router.post("/addrecord/:id", async(req,res)=>{
-    try {
-        const id = req.params.id;
-        
-    } catch(err) {
-
-    }
-})
-
-router.get("/booksrecords", async(req,res)=>{
-    try {
-        
-    } catch(err) {
-
-    }
-})
+router.get("/borrow-records", viewBorrowedBooks)
 
 module.exports = router;

@@ -23,7 +23,7 @@ exports.viewBooks = async(req,res)=>{
 exports.viewBookById = async(req,res)=>{
     try{
         const id = req.params.id;
-        const result = await Books.find({_id: id});
+        const result = await Books.find({_id: id}).populate('assignedTo', 'name email -_id');
         res.json(result);
     } catch(err) {
         res.json({message: err.message});
@@ -51,7 +51,7 @@ exports.deleteByTitle = async(req,res)=>{
 
 exports.searchByGenre = async(req,res)=>{
     try{
-        const results = await Books.find({genre: req.params.genre});
+        const results = await Books.find({genre: req.params.genre}).populate('assignedTo', 'name email -_id');
         res.json(results);
     } catch(err) {
         res.json({message: err.message});
