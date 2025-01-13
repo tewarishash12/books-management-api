@@ -1,8 +1,8 @@
 const Author = require("../models/author");
 const router = require("express").Router();
-const {addAuthor, allAuthors, authorById, updateAuthor} = require("../main_controllers/authorController");
+const { addAuthor, allAuthors, authorById, updateAuthor } = require("../main_controllers/authorController");
 
-const {authAdmin} = require("../middleware/authMiddleware") 
+const { authAdmin } = require("../middleware/authMiddleware")
 
 router.post("/", authAdmin, addAuthor)
 
@@ -10,6 +10,6 @@ router.get("/", allAuthors)
 
 router.get("/:id", authorById)
 
-router.patch("/addbooks/:id", updateAuthor)
+router.patch("/addbooks/:id", authAdmin, updateAuthor)
 
 module.exports = router;
